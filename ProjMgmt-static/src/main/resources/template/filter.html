@@ -1,0 +1,85 @@
+<div ng-controller="headerCtrl" ng-include="'template/header.html'"></div>
+<br>
+<div class="container">
+	<div class="row">
+	<div class="col-xs-12 col-sm-12 filter-btn">
+		<a href="" class="fa fa-filter fa-1x" id="filter_data">Filters</a>
+	</div>
+	<div class="col-xs-12 col-sm-12 filter-e">
+		Product:<span id='product_e'></span>
+	</div>
+	</div>
+<br>
+<div class="row activity-wrapper"  ng-repeat='activity in products'>
+	<div class="col-xs-12 col-sm-12 activity" ng-click="viewPost(activity.post_id)">
+	  <div class="activity-update" ng-show="activity.activities.length > 0">
+		<a ng-href="#/employeeprofile?user_id={{activity.activities[activity.activities.length-1].done_by}}">{{activity.activities[activity.activities.length-1].user_name}}</a> has <span ng-if="activity.activities[activity.activities.length-1].type == 'comment'"> commented on post </span>
+		<span ng-if="activity.activities[activity.activities.length-1].type == 'like'"> liked the post </span>
+	  </div>
+      <div class="activity-header">
+      
+        <div class="activity-icon">
+          <img ng-src="{{activity.priImageUrl.url}}" width='90' height='90'>
+        </div>
+        <div class="activity-title">
+          <a ng-href="#/employeeprofile?user_id={{activity.user_id}}">{{activity.user_name}}</a> has posted to sell his {{activity.product}}.
+        </div>
+      
+      </div>
+      <div class="activity-details">
+        <div class="activity-spec">
+            Brand:{{activity.attribute.brand}},Model:{{activity.attribute.model}},Price:Rs. {{activity.attribute.price}}
+        </div>
+      <div class="col-xs-12" ng-show="activity.commentLength > 0">{{activity.commentLength}} comments
+        <div class="post-comment" ng-repeat="cmnt in activity.comment | limitTo:-3 | orderBy: '-comment_id'">
+        <a ng-href="#/employeeprofile?user_id={{cmnt.user_id}}"> {{cmnt.user_name}} </a> <span>{{cmnt.message}}</span>
+        </div>
+      </div>
+      <div class="col-xs-12" ng-hide="activity.commentLength > 0">No comments yet </div>
+      </div>
+    </div>
+</div>
+</div>
+<div class="container filter-page hide">
+</div>
+<div class="container filter-attr hide">
+	<div class="fiter-tab">
+		<ul class="nav nav-tabs nav-stacked">
+			<li ng-class="{'active':currentTab(1)}" ng-repeat='attr in attributeArr'><a  ng-click="selectTab(attr)" data-toggle="tab">{{attr}}</a></li>
+ </ul>
+	</div>
+	<div class="fiter-content">
+		<div  ng-repeat='attr in attributeArr' class="panel" ng-show="currentTab('{{attr}}')">
+			
+			<span ng-if="attr== 'Brand'">
+				<input type="text" placeholder="serach brands" ng-model="name"><br>
+				<span ng-repeat="brand in brands | filter:name">
+					<input type="checkbox" value="{{brand}}" name="brand">&nbsp;{{brand}}<br>
+				</span>
+			</span>
+			<span ng-if="attr== 'Internal Memory'">
+				<input type="checkbox" value="2 GB">&nbsp;2 GB<br>
+				<input type="checkbox" value="4 GB">&nbsp;4 GB<br>
+				<input type="checkbox" value="8 GB">&nbsp;8 GB<br>
+				<input type="checkbox" value="16 GB">&nbsp;16 GB<br>
+			</span>
+			<span ng-if="attr== 'Price'">
+				<input type="checkbox" value="2 GB">&nbsp;Rs. 2000 And Below<br>
+				<input type="checkbox" value="4 GB">&nbsp;Rs. 2001 to Rs. 3000<br>
+				<input type="checkbox" value="8 GB">&nbsp;Rs. 3001 to Rs. 5000<br>
+				<input type="checkbox" value="16 GB">&nbsp;Rs. 50001 And Above<br>
+			</span>
+			
+						
+		</div>
+		
+	</div>
+	<div class="col-xs-12 col-sm-12 filter-button-group">
+		<div class="btn-group btn-group-justified">
+		  <a href="" class="btn btn-primary" id="filter_cancel_btn">Cancel</a>
+		  <a href="" class="btn btn-primary" ng-click="filterProducts()">Apply Filters</a>
+		</div>
+	</div>
+</div>
+<br/>
+<div ng-include="'template/footer.html'"></div>

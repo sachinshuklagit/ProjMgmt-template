@@ -1,0 +1,19 @@
+{
+  "name": "MongodB-Demo",
+  "description": "Demonstrates Using MongoDB in Node.js",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "async": "0.1.x",
+    "mongodb": "1.2.x",
+    "mongoose": "*",
+    "express": "3.x",
+    "emailjs":"0.3.16",
+    "moment": "2.8.1",
+    "mime":"1.3.4",
+    "aws-sdk":"2.1.39",
+    "fs":"0.0.2",
+    "https":"1.0.0",
+    "request":"2.60.0"
+  }
+}

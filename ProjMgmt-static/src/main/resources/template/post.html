@@ -1,0 +1,99 @@
+<div ng-controller="headerCtrl" ng-include="'template/header.html'"></div>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12 col-xs-12">
+			<h4>Post your Ad</h4>
+		</div>
+		<br>
+		<div class="col-xs-12 col-sm-12">
+			<div id="errMsg" class="hide error invalid"></div><br/>
+			<form>
+				<div class="form-group">
+					<!-- <label for="inputTitle">Title</label> -->
+					<input type="text" ng-model="formData.inputTitle" class="form-control primaryData required" id="inputTitle" placeholder="Title">
+			 	</div>
+			 	
+				<div class="form-group">
+					<!-- <label for="selectProduct">Product</label> -->
+					<input type="text" ng-model="formData.product" class="form-control primaryData required"
+						id="product" data-toggle="modal"
+						data-target=".bs-example-modal-sm" readonly
+						placeholder="Select Product" />
+				</div>
+				
+				<div id="subCategoryDiv" style="display:none;">
+					<div ng-repeat = "attributes in productAttr">
+						<div ng-repeat="(key, value) in attributes" class="form-group">
+							<div ng-switch on="key">
+								<input type="number" ng-switch-when="ram" class="form-control secondaryData required" id="{{key}}" placeholder="{{value.label}} : {{value.example}}" ng-model="formData.attribute[key]"/>
+								<input type="number" ng-switch-when="internal_memory" class="form-control secondaryData required" id="{{key}}" placeholder="{{value.label}} : {{value.example}}" ng-model="formData.attribute[key]"/>
+								<input type="number" ng-switch-when="hard_disk" class="form-control secondaryData required" id="{{key}}" placeholder="{{value.label}} : {{value.example}}" ng-model="formData.attribute[key]"/>
+								<input type="number" ng-switch-when="odometer_reading" class="form-control secondaryData required" id="{{key}}" placeholder="{{value.label}} : {{value.example}}" ng-model="formData.attribute[key]"/>
+								<input type="number" ng-switch-when="year" class="form-control secondaryData required" id="{{key}}" placeholder="{{value.label}} : {{value.example}}" ng-model="formData.attribute[key]"/>
+								<input type="number" ng-switch-when="price" class="form-control secondaryData required" id="{{key}}" placeholder="{{value.label}} : {{value.example}}" ng-model="formData.attribute[key]"/>
+								<input type="text" ng-switch-default class="form-control secondaryData required" id="{{key}}" placeholder="{{value.label}} : {{value.example}}" ng-model="formData.attribute[key]"/>
+							</div>
+					    </div>
+					</div>				 
+				</div>
+				
+				<div class="form-group">
+					<!-- <label for="inputDescription">Description</label> -->
+					<textarea ng-model="formData.inputDescription" class="form-control primaryData" id="inputDescription" placeholder="Description"></textarea>
+				</div>
+				 
+				<div class="form-group">
+					<label for="exampleInputFile">Upload Image</label>
+					<input id="fileupload" type="file" accept="image/*" image="image1"
+							resize-max-height="1000" resize-max-width="1000"
+							resize-quality="0.7" resize-type="image/jpg"
+							callback="imageUpload()"/>
+					<!--<img ng-src="{{image1.compressed.dataURL}}" width='130' height='130'/>
+					<input type="file" id="fileupload"/>-->
+					<br>
+					<div id="dvPreview" class="image-source"></div>
+				</div>
+				
+				<div class="form-group" ng-init="formData.deal_type='lock'">
+					<label for="deal">Deal Type</label> <br>
+					<label class="radio-inline"><input type="radio" ng-model="formData.deal_type" value="lock">Lock the deal</label>
+					<label class="radio-inline"><input type="radio" ng-model="formData.deal_type" value="bid">Bid</label>
+			  	</div> 
+			  	
+			  	<div class="form-group" ng-init="formData.visibility='public'">
+					<label for="deal">Visibility of Post</label> <br>
+					<label class="radio-inline"> <input type="radio" ng-model="formData.visibility" value="public"> Public </label>
+					<label class="radio-inline"> <input type="radio" ng-model="formData.visibility" value="private"> Private </label>
+			 	</div> 
+			  
+		  		<button type="submit" id="submit" class="btn btn-default" ng-click="submitPost()">Post</button>
+			</form>
+			<br/>
+
+			<div id='postMsg' class="hide col-xs-12 col-sm-12 alert alert-success">
+				<strong>Success!</strong> Your Ad has been posted!
+			</div>
+		</div>
+	</div>
+
+	<div style="width:75%" id="product_dialog" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="list-group">
+				  <a class="list-group-item" ng-click="setProdcut('Mobile')"><i class="fa fa-mobile-phone fa-2x"></i>&nbsp; Mobile</a>
+				  <a class="list-group-item" ng-click="setProdcut('Car')"><i class="fa fa-car fa-2x"></i>&nbsp; Car</a>
+				  <a class="list-group-item" ng-click="setProdcut('Tablet')"><i class="fa fa-tablet fa-2x"></i>&nbsp; Tablet</a>
+				  <a class="list-group-item" ng-click="setProdcut('Bike')"><i class="fa fa-motorcycle fa-2x"></i>&nbsp; Bike</a>
+				  <a class="list-group-item" ng-click="setProdcut('Laptop')"><i class="fa fa-laptop fa-2x"></i>&nbsp; Laptop</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="loaderdiv" class="page-loader "></div>
+	<span class="page-loader ">
+		<i class="loader fa fa-spinner fa-4x fa-pulse"></i>
+	</span>
+</div>
+<br/>
+<div ng-include="'template/footer.html'"></div>
