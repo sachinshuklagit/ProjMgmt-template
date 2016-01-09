@@ -31,6 +31,7 @@ public class DummyController {
 
     @RequestMapping(value = "/dummyobj", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody DummyVO getDummyObj () {
+	System.out.println("Inside DummyController#getDummyObj method....");
         return personService.getDummyObj();
     }
 
